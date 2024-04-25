@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Postulación - Chiloé</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Formulario de Postulación - Chiloé</h1>
+    <form id="formulario" onsubmit="return validarFormulario()">
+        <!-- Campos del formulario -->
+        <label for="rut">Rut:</label>
+        <input type="text" id="rut" name="rut" required>
+
+        <label for="apellidoPaterno">Apellido Paterno:</label>
+        <input type="text" id="apellidoPaterno" name="apellidoPaterno" required>
+
+        <label for="apellidoMaterno">Apellido Materno:</label>
+        <input type="text" id="apellidoMaterno" name="apellidoMaterno" required>
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="18" max="35" required>
+
+        <label for="genero">Género:</label>
+        <select id="genero" name="genero" required>
+            <option value="">Seleccione</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="otro">Otro</option>
+        </select>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="celular">Celular:</label>
+        <input type="tel" id="celular" name="celular" minlength="9" maxlength="12" required>
+
+        <label for="profesion">Profesión:</label>
+        <input type="text" id="profesion" name="profesion" required>
+
+        <label for="motivacion">Motivación para postular al trabajo:</label>
+        <textarea id="motivacion" name="motivacion" rows="4" required></textarea>
+
+        <button type="button" id="crearCarta">Crear Carta</button>
+        <button type="submit">Enviar</button>
+        
+    </form>
+
+    <!-- Campo para la carta de presentación -->
+    <textarea id="carta" rows="10" cols="50" readonly></textarea>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+  $("#formulario").submit(function(event) {
+    var rut = $("#rut").val();
+    var nombre = $("#nombre").val();
+    var apellido_paterno = $("#apellidoPaterno").val(); // Cambiado aquí
+    var apellido_materno = $("#apellidoMaterno").val(); // Cambiado aquí
+    var fecha_nacimiento = $("#fechaNacimiento").val();
+    var edad = $("#edad").val();
+    var genero = $("#genero").val();
+    var email = $("#email").val();
+    var celular = $("#celular").val();
+    var profesion = $("#profesion").val();
+    var motivacion = $("#motivacion").val();
+
+    if (rut.length < 9 || rut.length > 10) {
+      alert("RUT inválido. Debe tener entre 9 y 10 caracteres.");
+      event.preventDefault();
+      return false;
+    }
+
+    if (nombre.length < 3 || nombre.length > 20) {
+      alert("Nombre inválido. Debe tener entre 3 y 20 caracteres.");
+      event.preventDefault();
+      return false;
+    }
+
+    if (apellido_paterno.length < 3 || apellido_paterno.length > 20) {
+      alert("Apellido paterno inválido. Debe tener entre 3 y 20 caracteres.");
+      event.preventDefault();
+      return false;
+    }
+
+    if (apellido_materno.length < 3 || apellido_materno.length > 20) {
+      alert("Apellido materno inválido. Debe tener entre 3 y 20 caracteres.");
+      event.preventDefault();
+      return false;
+    }
+
+    var today = new Date();
+    var birthDate = new Date(fecha_nacimiento);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    if (age < 18 || age > 35) {
+      alert("Edad inválida. Debe estar entre 18 y 35 años.");
+      event.preventDefault();
+      return false;
+    }
+
+    if (genero === "") {
+      alert("Debe seleccionar un género.");
+      event.preventDefault();
+      return false;
+    }
+
+    if (celular.length < 9 || celular.length > 12) {
+      alert("Número de celular inválido. Debe tener entre 9 y 12 caracteres.");
+      event.preventDefault();
+      return false;
+    }
+
+    // Si todas las validaciones son exitosas, el formulario se enviará normalmente
+  });
+
+  $("#crearCarta").click(function() {
+    var rut = $("#rut").val();
+    var nombre = $("#nombre").val();
+    var apellido_paterno = $("#apellidoPaterno").val(); // Cambiado aquí
+    var apellido_materno = $("#apellidoMaterno").val(); // Cambiado aquí
+    var fecha_nacimiento = $("#fechaNacimiento").val();
+    var edad = $("#edad").val();
+    var genero = $("#genero").val();
+    var email = $("#email").val();
+    var celular = $("#celular").val();
+    var profesion = $("#profesion").val();
+    var motivacion = $("#motivacion").val();
+
+    var carta = "Carta de presentación para la postulación al trabajo en Chiloé:\n";
+    carta += "RUT: " + rut + "\n";
+    carta += "Nombre: " + nombre + "\n";
+    carta += "Apellido Paterno: " + apellido_paterno + "\n";
+    carta += "Apellido Materno: " + apellido_materno + "\n";
+    carta += "Motivo de Postulación: " + motivacion + "\n";
+    carta += "Profesión: " + profesion + "\n";
+    carta += "Fecha de Nacimiento: " + fecha_nacimiento + "\n";
+    carta += "Edad: " + edad + "\n";
+    carta += "Género: " + genero + "\n";
+    carta += "Email: " + email + "\n";
+    carta += "Celular: " + celular + "\n";
+    $("#carta").val(carta);
+    });
+  });
+  
+  </script>
+
+</body>
+
+</html>
